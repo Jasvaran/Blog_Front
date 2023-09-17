@@ -1,12 +1,23 @@
 import "./SignUp.css"
 import Nav from "../Nav/Nav"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 function SignUp(){
 
     const [username, setUsername] = useState("")
-
     const [password, setPassword] = useState("")
+
+    let navigate = useNavigate();
+    
+    const routeChange = () => {
+        let path = `/login`
+        navigate(path)
+    }
+
+ 
+
+
 
     function handleChange(e) {
         if (e.target.id === 'username'){
@@ -19,17 +30,30 @@ function SignUp(){
     }
 
     async function handleSubmit(e){
+        // TODO : Display Errors in Form if validation fails
+        // server crashes when creating a user that does pass validation?
         e.preventDefault()
-        const response = await fetch('http://localhost:3000/user',{
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: `username=${username}&password=${password}`
-        })
-            .then(response => response.json())
-            .then(response => console.log(JSON.stringify(response)))
+
+        try {
+                // eslint-disable-next-line no-unused-vars
+                const response = await fetch('http://localhost:3000/user',{
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: `username=${username}&password=${password}`
+                })
+                    .then(response => response.json())
+                    .then((response) => {
+                        console.log(JSON.stringify(response))
+                        console.log('successfully created user')
+                        routeChange()
+                    })
+        } catch (error) {
+                console.log("Error in creating user")
+        }
+
     }
 
 
@@ -46,7 +70,7 @@ function SignUp(){
                     </div>
                     <div className="mb-3">
                         <label htmlFor="password" className="form-label">Password</label>
-                        <input type="text" name="password" id="password" className="form-control" onChange={handleChange} />
+                        <input type="password" name="password" id="password" className="form-control" onChange={handleChange} />
                     </div>
                     <button type="submit" className="btn btn-primary btn-lg mb-3">Submit</button>
                 </form>

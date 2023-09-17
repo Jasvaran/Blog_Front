@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import './LogIn.css'
 import { Link } from 'react-router-dom'
 import Nav from '../Nav/Nav'
@@ -28,7 +29,7 @@ function LogIn() {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="password" className="form-label">Password</label>
-                        <input type="text" name="password" id='password' className="form-control" />
+                        <input type="password" name="password" id='password' className="form-control" />
                     </div>
                     <button type="submit" className="btn btn-primary btn-lg mb-3">Submit</button>
                     <div className="mb-3">
