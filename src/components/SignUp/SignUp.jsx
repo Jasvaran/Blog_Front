@@ -1,12 +1,19 @@
 import "./SignUp.css"
 import Nav from "../Nav/Nav"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 function SignUp(){
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const [errors, setErrors] = useState([])
+
+
+    useEffect(() => {
+        console.log(errors)
+    }, [errors])
+
 
     let navigate = useNavigate();
     
@@ -30,29 +37,38 @@ function SignUp(){
     }
 
     async function handleSubmit(e){
-        // TODO : Display Errors in Form if validation fails
-        // server crashes when creating a user that does pass validation?
+       // TODO: conditionally render errors if there are any errors
         e.preventDefault()
 
-        try {
-                // eslint-disable-next-line no-unused-vars
-                const response = await fetch('http://localhost:3000/user',{
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: `username=${username}&password=${password}`
-                })
-                    .then(response => response.json())
-                    .then((response) => {
-                        console.log(JSON.stringify(response))
-                        console.log('successfully created user')
-                        routeChange()
-                    })
-        } catch (error) {
-                console.log("Error in creating user")
-        }
+        
+        // eslint-disable-next-line no-unused-vars
+        const response = await fetch('http://localhost:3000/user',{
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+        })
+            .then((response) => {
+                console.log(response)
+                return response.json()
+            })
+            .then((response) => {
+                console.log('before stringify', response)
+                console.log(JSON.stringify(response))
+                if (response.errors){
+                    console.log('response returned errors')
+                    setErrors(response.errors)
+                }
+                if (response.username){
+                    console.log('response returned user object')
+                    routeChange()
+                }
+            })
 
     }
 
