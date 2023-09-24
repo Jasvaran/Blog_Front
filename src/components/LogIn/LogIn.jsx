@@ -1,17 +1,25 @@
 /* eslint-disable no-unused-vars */
 import './LogIn.css'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Nav from '../Nav/Nav'
 import { useEffect, useState } from 'react'
-function LogIn() {
+function LogIn(props) {
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
 
 
     useEffect(() => {
         console.log(username)
     })
+
+    let navigate = useNavigate();
+
+    function routeChange() {
+        let path = '/'
+        navigate(path)
+    }
 
     function handleChange(e){
         if (e.target.id === 'username'){
@@ -23,6 +31,7 @@ function LogIn() {
     }
 
     async function handleSubmit(e){
+        
         e.preventDefault();
 
         const response = await fetch('http://localhost:3000/user/login', {
@@ -31,17 +40,27 @@ function LogIn() {
             headers: {
                 'Content-Type' : 'application/json'
             },
+            credentials: 'include',
             body: JSON.stringify({
                 username: username,
                 password: password
-            })
+            }),
         })
             .then((response) => {
                 console.log('response before .json()------>' , response)
+
                 return response.json()
             })
             .then((response) => {
                 console.log(response)
+                //TODO: add form validation classes if log in info is incorrect
+                // and reroute to home page upon successfull login
+
+                if (response.user){
+                    setIsAuthenticated(true)
+                    
+                }
+
             })
 
     }
