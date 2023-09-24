@@ -3,16 +3,17 @@ import './LogIn.css'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Nav from '../Nav/Nav'
 import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { authenticate } from '../../redux/userAuthSlice'
 function LogIn(props) {
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const dispatch = useDispatch();
 
+    const isAuthenticated = useSelector((state) => state.userAuth)
+    console.log(isAuthenticated)
 
-    useEffect(() => {
-        console.log(username)
-    })
 
     let navigate = useNavigate();
 
@@ -55,10 +56,13 @@ function LogIn(props) {
                 console.log(response)
                 //TODO: add form validation classes if log in info is incorrect
                 // and reroute to home page upon successfull login
-
                 if (response.user){
-                    setIsAuthenticated(true)
-                    
+                    dispatch(authenticate(true))
+                    routeChange()
+                }
+                
+                if (response.message){
+                    console.log('log in failed')
                 }
 
             })

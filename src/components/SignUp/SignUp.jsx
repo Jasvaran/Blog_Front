@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 
 
 
+
 function SignUp(){
 
     const [username, setUsername] = useState("")
@@ -14,6 +15,8 @@ function SignUp(){
     const [passwordError, setPasswordError] = useState("")
     const [userNameClass, setUserNameClass] = useState("form-control")
     const [passwordClass, setPasswordClass] = useState("form-control")
+
+
 
 
     useEffect(() => {

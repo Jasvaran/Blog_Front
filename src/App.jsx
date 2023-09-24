@@ -1,10 +1,8 @@
-
 import './App.css'
 import Nav from './components/Nav/Nav'
 
 function App() {
 
-  
 
 
 
@@ -13,7 +11,8 @@ function App() {
       <div className="header">
         <Nav />
       </div>
-      <div className="body"></div>
+      <div className="body">
+      </div>
       <div className="footer"></div>
     </div>
   )
