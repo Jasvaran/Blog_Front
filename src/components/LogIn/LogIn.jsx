@@ -5,14 +5,27 @@ import Nav from '../Nav/Nav'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { authenticate } from '../../redux/userAuthSlice'
+
+
 function LogIn(props) {
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    const dispatch = useDispatch();
+    const [usernameError, setUsernameError] = useState("")
+    const [passwordError, setPasswordError] = useState("")
+    const [errors, setErrors] = useState([])
+    const [usernameClass, setUsernameClass] = useState("form-control")
+    const [passwordClass, setPasswordClass] = useState("form-control")
 
+    useEffect(() => {
+        sortErrors(errors)
+    }, [errors])
+
+
+
+    // redux. set isAuthenticated state to true if user log in is a success
+    const dispatch = useDispatch();
     const isAuthenticated = useSelector((state) => state.userAuth)
-    console.log(isAuthenticated)
 
 
     let navigate = useNavigate();
@@ -61,11 +74,24 @@ function LogIn(props) {
                     routeChange()
                 }
                 
-                if (response.message){
+                if (response.error){
                     console.log('log in failed')
+                    setErrors(response.error)
                 }
 
             })
+
+    }
+
+    function sortErrors(err){
+        if (err[0] === 'incorrect username'){
+            setUsernameError(err[0])
+            setUsernameClass(prevState => prevState + ' invalid')
+        }
+        if (err[0] === 'Incorrect password'){
+            setPasswordError(err[0])
+            setPasswordClass(prevState => prevState + ' invalid')
+        }
 
     }
 
@@ -77,11 +103,13 @@ function LogIn(props) {
                 <form action="" className='d-flex flex-column justify-content-center' style={{height: "500px"}} onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="username" className="form-label">Username</label>
-                        <input type="text" name="username" id='username' className="form-control" onChange={handleChange} />
+                        <span className="ms-3 error">{usernameError}</span>
+                        <input type="text" name="username" id='username' className={usernameClass} onChange={handleChange} required />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="password" className="form-label">Password</label>
-                        <input type="password" name="password" id='password' className="form-control" onChange={handleChange} />
+                        <input type="password" name="password" id='password' className={passwordClass} onChange={handleChange} required />
+                        <span className="ms-3 error">{passwordError}</span>
                     </div>
                     <button type="submit" className="btn btn-primary btn-lg mb-3">Submit</button>
                     <div className="mb-3">
