@@ -1,8 +1,34 @@
+/* eslint-disable no-unused-vars */
+import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
+import { authenticate } from "../../redux/userAuthSlice"
 
 function Nav(){
 
-    
+    // TODO: Conditionally render logout
+    // TODO: call fetch to make a req to the logout route on server
+
+    const isAuthenticated = useSelector((state) => state.userAuth)
+    const dispatch = useDispatch()
+
+    async function logOut(){
+        
+        const response = await fetch("http://localhost:3000/user/logout", {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            credentials: 'include',  
+        })
+            .then((response) => {
+                return response.json()
+            })
+            .then((data) => {
+                dispatch(authenticate(false))
+                console.log(data)
+            })
+    }
 
     return (
         <>
@@ -14,11 +40,16 @@ function Nav(){
                                 <button type="button" className="btn btn-primary btn-sm">Home</button>
                             </li>
                         </Link>
+                        { isAuthenticated.value ? <button className="btn btn-primary btn-sm" onClick={logOut}>Log Out</button> 
+                        
+                        :
+                        
                         <Link to='/login'>
                             <li className="nav-item">
                                 <button type="button" className="btn btn-primary btn-sm">Log In</button>
                             </li>
-                        </Link>
+                        </Link> }
+                        
                     </ul>
             </nav>
         </>
