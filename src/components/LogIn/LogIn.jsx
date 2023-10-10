@@ -67,8 +67,7 @@ function LogIn(props) {
             })
             .then((response) => {
                 console.log(response)
-                //TODO: add form validation classes if log in info is incorrect
-                // and reroute to home page upon successfull login
+
                 if (response.user){
                     dispatch(authenticate(true))
                     routeChange()

@@ -5,8 +5,7 @@ import { authenticate } from "../../redux/userAuthSlice"
 
 function Nav(){
 
-    // TODO: Conditionally render logout
-    // TODO: call fetch to make a req to the logout route on server
+
 
     const isAuthenticated = useSelector((state) => state.userAuth)
     const dispatch = useDispatch()
