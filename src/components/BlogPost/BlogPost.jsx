@@ -4,11 +4,15 @@ import CommentForm from '../CommentForm/CommentForm'
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import Nav from "../Nav/Nav"
+import CommentSection from '../CommentSection/CommentSection'
+import { useSelector } from 'react-redux'
 function BlogPost(props){
 
     const [post, setPost] = useState({})
 
     const params = useParams()
+
+    const isAuthenticated = useSelector((state) => state.userAuth)
 
     useEffect(() => {
         findPost()
@@ -34,7 +38,7 @@ function BlogPost(props){
  
     return (
         
-        <div className="container-fluid d-flex flex-column justify-content-center align-items-center " id="main-container">
+        <div className="d-flex flex-column " id="main-container">
 
             <div className="container-fluid" id='header-container'>
                 <Nav />
@@ -52,7 +56,8 @@ function BlogPost(props){
 
             </div>
 
-            <CommentForm post={post} />
+            {isAuthenticated.value ? <CommentForm post={post} /> : "" }
+            <CommentSection post={post}/>
 
         </div>
 

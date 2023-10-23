@@ -7,9 +7,7 @@ function CommentForm(props) {
     const [comment, setComment] = useState("");
 
 
-    useEffect(() => {
-        
-    })
+
 
     function handleChange(e){
         e.preventDefault()

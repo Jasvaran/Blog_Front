@@ -61,12 +61,12 @@ function LogIn(props) {
             }),
         })
             .then((response) => {
-                console.log('response before .json()------>' , response)
+                // console.log('response before .json()------>' , response)
 
                 return response.json()
             })
             .then((response) => {
-                console.log(response)
+                // console.log(response)
 
                 if (response.user){
                     dispatch(authenticate(true))

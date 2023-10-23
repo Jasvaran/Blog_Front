@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 function Card(props){
 
-    console.log('card --->', props.obj)
+    // console.log('card --->', props.obj)
 
     return (
         <>   
