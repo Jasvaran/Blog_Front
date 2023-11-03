@@ -30,10 +30,20 @@ function App() {
         return response.json()
       })
       .then((data) => {
-        // console.log(data)
+        console.log(data)
         setPosts(data)
 
       })
+  }
+
+  const _arrayBufferToBase64 = (buffer) => {
+    let binary = ''
+    let bytes = new Uint8Array(buffer)
+    var len = bytes.byteLength;
+    for (let i = 0; i < len; i++){
+      binary += String.fromCharCode(bytes[i])
+    }
+    return window.btoa(binary)
   }
 
   return (
@@ -43,11 +53,14 @@ function App() {
       </div>
       <div className="container-fluid d-flex flex-wrap" id='body-container'>
         {posts.map((obj, index) => {
-          return (
-            // btoa(String.fromCharCode.apply()) converts buffer data to base64 string 
-            <Card key={index} image={btoa(String.fromCharCode.apply(null, new Uint8Array(obj.blogpic.data.data)))} 
-                  contentType={obj.blogpic.contentType} title={obj.title} obj={obj} />
-          )
+          if (obj.published){
+            
+            return (
+              // btoa(String.fromCharCode.apply()) converts buffer data to base64 string 
+              <Card key={index} image={_arrayBufferToBase64(obj.blogpic.data.data)} 
+                    contentType={obj.blogpic.contentType} title={obj.title} obj={obj} />
+            )
+          }
         })}
       </div>
       <div className="footer" id='footer-container'> The Odin Project</div>

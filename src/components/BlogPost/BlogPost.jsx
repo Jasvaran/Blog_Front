@@ -34,6 +34,16 @@ function BlogPost(props){
 
     }
 
+    const _arrayBufferToBase64 = (buffer) => {
+        let binary = ''
+        let bytes = new Uint8Array(buffer)
+        var len = bytes.byteLength;
+        for (let i = 0; i < len; i++){
+          binary += String.fromCharCode(bytes[i])
+        }
+        return window.btoa(binary)
+      }
+
 
  
     return (
@@ -47,7 +57,7 @@ function BlogPost(props){
             <div className="container-fluid d-flex flex-column justify-content-center align-items-center" id="body-container">
                 <h1>{post.title}</h1>
                 {post.blogpic ? <img src={"data:" + post.blogpic.contentType + 
-                    ';base64,' + btoa(String.fromCharCode.apply(null, new Uint8Array(post.blogpic.data.data)))} alt=""></img>
+                    ';base64,' + _arrayBufferToBase64(post.blogpic.data.data)} alt=""></img>
                                 : ""}
 
                 <div className="container-fluid" id="blog-text-container">
