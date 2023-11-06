@@ -21,15 +21,14 @@ function  CommentSection(props){
                     return response.json()
                 })
                 .then((data) => {
-                    let filteredData = data.filter((comment) => comment.post !== props.post._id)
-                    console.log(filteredData)
+                    let filteredData = data.filter((comment) => comment.post === props.post._id)
                     setListOfComments(filteredData)
                 })
         }
 
         getComments()                   
 
-    }, [])
+    }, [props.post._id])
 
 
 
