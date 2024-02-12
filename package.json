@@ -3,6 +3,7 @@
   "private": false,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "http://jasvaran.github.io/Blog_Front",
   "scripts": {
     "dev": "vite",
     "predeploy":"npm run build",
