@@ -35,7 +35,7 @@ function CreatePost(){
             console.log('dataaa--->', data)
     
     
-            const response = await fetch('http://localhost:3000/posts', {
+            const response = await fetch('https://blog-api-9r0h.onrender.com/posts', {
                 method: 'POST',
                 mode: 'cors',
                 credentials: 'include',

@@ -12,7 +12,7 @@ function Nav(){
 
     async function logOut(){
         
-        const response = await fetch("http://localhost:3000/user/logout", {
+        const response = await fetch("https://blog-api-9r0h.onrender.com/user/logout", {
             method: 'POST',
             mode: 'cors',
             headers: {

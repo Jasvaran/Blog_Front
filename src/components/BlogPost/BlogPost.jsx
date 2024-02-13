@@ -19,7 +19,7 @@ function BlogPost(props){
     }, [])
 
     async function findPost(){
-        const response = await fetch("http://localhost:3000/posts/" + params.id, {
+        const response = await fetch("https://blog-api-9r0h.onrender.com/posts/" + params.id, {
             method: "GET",
             mode: "cors",
             credentials: 'include',

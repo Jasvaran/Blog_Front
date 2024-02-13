@@ -22,7 +22,7 @@ function App() {
 
 
   async function findPosts(){
-    const posts = await fetch("http://localhost:3000/posts", {
+    const posts = await fetch("https://blog-api-9r0h.onrender.com/posts", {
       method: 'GET',
       mode: 'cors',
     })

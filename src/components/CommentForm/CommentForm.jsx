@@ -18,7 +18,7 @@ function CommentForm(props) {
 
     async function createComment(e){
 
-        const response = await fetch("http://localhost:3000/comments", {
+        const response = await fetch("https://blog-api-9r0h.onrender.com/comments", {
             method: 'POST',
             credentials: 'include',
             mode: 'cors',
